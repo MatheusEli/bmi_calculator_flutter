@@ -5,8 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon-content.dart';
 
 const bottomContainerHeight = 80.0;
+const activeCardColor = Color(0xFF1D1E33);
+const inactiveCardColor = Color(0xFF111328);
 const reusableCardColor = 0xFF1D1E33;
 const bottomContainerColor = 0xFFEB1555;
+
+enum GenderType { male, female }
 
 class InputPage extends StatefulWidget {
   const InputPage({super.key});
@@ -16,6 +20,8 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  GenderType genderSelected = GenderType.male;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +36,18 @@ class _InputPageState extends State<InputPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: ReusableCard(
-                    color: const Color(reusableCardColor),
+                    color: genderSelected == GenderType.male
+                        ? activeCardColor
+                        : inactiveCardColor,
                     cardChild: iconContent(
                       icon: FontAwesomeIcons.mars,
                       text: 'MALE',
                     ),
+                    onPress: () {
+                      setState(() {
+                        genderSelected = GenderType.male;
+                      });
+                    },
                   ),
                 ),
               ),
@@ -42,11 +55,18 @@ class _InputPageState extends State<InputPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: ReusableCard(
-                    color: const Color(reusableCardColor),
+                    color: genderSelected == GenderType.female
+                        ? activeCardColor
+                        : inactiveCardColor,
                     cardChild: iconContent(
                       icon: FontAwesomeIcons.venus,
                       text: 'FEMALE',
                     ),
+                    onPress: () {
+                      setState(() {
+                        genderSelected = GenderType.female;
+                      });
+                    },
                   ),
                 ),
               ),
@@ -54,13 +74,15 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: ReusableCard(
-                  color: const Color(reusableCardColor),
-                  cardChild: Column(
-                    children: const [Icon(FontAwesomeIcons.mars)],
-                  ),
-                )),
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                height: 20.0,
+                decoration: BoxDecoration(
+                  color: inactiveCardColor,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
           ),
           Row(
             children: [
@@ -68,22 +90,33 @@ class _InputPageState extends State<InputPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: ReusableCard(
-                    color: const Color(reusableCardColor),
+                    color: inactiveCardColor,
                     cardChild: Column(
                       children: const [Icon(FontAwesomeIcons.mars)],
                     ),
+                    onPress: () {
+                      setState(() {
+                        genderSelected = GenderType.female;
+                      });
+                    },
                   ),
                 ),
               ),
               Expanded(
                 child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: ReusableCard(
-                      color: const Color(reusableCardColor),
-                      cardChild: Column(
-                        children: const [Icon(FontAwesomeIcons.mars)],
-                      ),
-                    )),
+                  padding: const EdgeInsets.all(12.0),
+                  child: ReusableCard(
+                    color: inactiveCardColor,
+                    cardChild: Column(
+                      children: const [Icon(FontAwesomeIcons.mars)],
+                    ),
+                    onPress: () {
+                      setState(() {
+                        genderSelected = GenderType.female;
+                      });
+                    },
+                  ),
+                ),
               ),
             ],
           ),
