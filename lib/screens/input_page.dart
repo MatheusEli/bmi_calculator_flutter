@@ -1,9 +1,11 @@
-import 'package:bmi_calculator_flutter/reusable-card.dart';
+import 'package:bmi_calculator_flutter/calculator_brain.dart';
+import 'package:bmi_calculator_flutter/screens/results_page.dart';
+import 'package:bmi_calculator_flutter/components/round_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'icon-content.dart';
-import 'constants.dart';
+import '../components/icon-content.dart';
+import '../components/reusable-card.dart';
+import '../constants.dart';
 
 enum GenderType { male, female }
 
@@ -193,45 +195,31 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            color: const Color(kBottomContainerColor),
-            margin: const EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: kBottomContainerHeight,
-            child: const Center(
-              child: Text(
-                'CALCULATE YOUR BMI',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w600),
+          GestureDetector(
+            onTap: () {
+              CalculatorBrain calc = CalculatorBrain(height, weight);
+              calc.calculateBMI();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ResultsPage(
+                          calc.calculateBMI(),
+                          calc.getResult(),
+                          calc.getInterpretation(),
+                        )),
+              );
+            },
+            child: Container(
+              color: const Color(kBottomContainerColor),
+              margin: const EdgeInsets.only(top: 10.0),
+              width: double.infinity,
+              height: kBottomContainerHeight,
+              child: const Center(
+                child: Text('CALCULATE YOUR BMI', style: kLargeButtonStyle),
               ),
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class RoundIconButton extends StatelessWidget {
-  const RoundIconButton(this.icon, this.onPressed, {super.key});
-
-  final IconData icon;
-  final Function onPressed;
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: () {
-        onPressed();
-      },
-      elevation: 6.0,
-      constraints: const BoxConstraints.tightFor(height: 56.0, width: 56.0),
-      shape: const CircleBorder(),
-      fillColor: const Color(0xFF4C4F5E),
-      child: Icon(
-        icon,
-        color: Colors.white,
       ),
     );
   }
