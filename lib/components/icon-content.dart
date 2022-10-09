@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'constants.dart';
+import '../constants.dart';
 
 class iconContent extends StatelessWidget {
   iconContent({required this.icon, required this.text});
